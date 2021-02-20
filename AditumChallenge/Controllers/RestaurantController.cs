@@ -14,21 +14,21 @@ namespace AditumChallenge.Controllers
     [ApiController]
     public class RestaurantController : Controller
     {
-        private readonly IRestaurantService _restaurantService;
+        private readonly IRestaurantService _IrestaurantService;
 
         public RestaurantController(IRestaurantService restaurantService)
         {
-            _restaurantService = restaurantService;
+            _IrestaurantService = restaurantService;
         }
         
 
         [HttpGet("csv")]
-        public ActionResult<List<Restaurant>> Get() => _restaurantService.Get();
+        public ActionResult<List<Restaurant>> Get() => _IrestaurantService.Get();
 
         [HttpGet("{id:length(24)}", Name = "GetRestaurant")]
         public ActionResult<Restaurant> GetById(string id)
         {
-            var restaurant = _restaurantService.GetById(id);
+            var restaurant = _IrestaurantService.GetById(id);
 
             if (restaurant == null)
                 return NotFound();
@@ -40,28 +40,27 @@ namespace AditumChallenge.Controllers
         [HttpGet("filter")]
         public ActionResult<List<Restaurant>> GetByHour(string hour)
         {
-            var restaurants = _restaurantService.GetByHour(hour);
+            var restaurants = _IrestaurantService.GetByHour(hour);
             return restaurants;
         }
 
         [HttpPost]
         public ActionResult<Restaurant> Create(Restaurant restaurant)
         {
-            _restaurantService.Create(restaurant);
+            _IrestaurantService.Create(restaurant);
             return CreatedAtRoute("GetRestaurant", new { id = restaurant.Id.ToString() }, restaurant);
         }
 
         [HttpPost("csv")]
         [Consumes("multipart/form-data")]
         public IActionResult PostFile([FromForm(Name = "file")] IFormFile file)
-        {
-            
+        {            
             var csvlines = CsvReader.ReadFromStream(file.OpenReadStream()).ToList();
             if (file.FileName.EndsWith(".csv"))
             {
                 try
                 {
-                    _restaurantService.ConvertCSV(csvlines);
+                    _IrestaurantService.ConvertCSV(csvlines);
                 }
                 catch(Exception e)
                 {
@@ -79,12 +78,12 @@ namespace AditumChallenge.Controllers
         [HttpPut]
         public IActionResult Update(string id, Restaurant restaurantIn)
         {
-            var restaurant = _restaurantService.GetById(id);
+            var restaurant = _IrestaurantService.GetById(id);
 
             if (restaurant == null)
                 return NotFound();
 
-            _restaurantService.Update(id, restaurantIn);
+            _IrestaurantService.Update(id, restaurantIn);
 
             return NoContent();
         }
@@ -92,12 +91,12 @@ namespace AditumChallenge.Controllers
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            var restaurant = _restaurantService.GetById(id);
+            var restaurant = _IrestaurantService.GetById(id);
 
             if (restaurant == null)
                 return NotFound();
 
-            _restaurantService.Remove(restaurant.Id);
+            _IrestaurantService.Remove(restaurant.Id);
 
             return NoContent();
         }
@@ -105,7 +104,7 @@ namespace AditumChallenge.Controllers
         [HttpDelete("delete-all")]
         public IActionResult DeleteMany()
         {
-            _restaurantService.RemoveAll();
+            _IrestaurantService.RemoveAll();
 
             return NoContent();
         }

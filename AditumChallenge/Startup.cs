@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using AditumChallenge.Models;
 using AditumChallenge.Services;
+using AditumChallenge.Interfaces;
 
 namespace AditumChallenge
 {
@@ -21,8 +22,17 @@ namespace AditumChallenge
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                        
+                    });
+            });
             services.AddSingleton<RestaurantService>();
-            
+            services.AddScoped<IRestaurantService, RestaurantService>();
             services.Configure<databaseSettings>(Configuration.GetSection(nameof(databaseSettings)));
             services.AddControllers();
 
@@ -35,7 +45,7 @@ namespace AditumChallenge
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
