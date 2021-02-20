@@ -13,6 +13,9 @@
 - [Começando](#Começando)
   - [Pré-requisitos](#Pré-requisitos)
   - [Instalação](#Instalação)
+- [Uso](#Uso)
+  - [Rodando Projeto](#Rodando-Projeto)
+  - [Rodando Testes](#Rodando-Testes)
 - [Contribuindo](#Contríbuindo)
 
 <!-- ABOUT THE PROJECT -->
@@ -34,11 +37,22 @@ git clone https://github.com/tiagocsl/AditumChallenge-Back.git
 cd AditumChallenge-Back
 ```
 
-2. Executando a solução
+## Uso
 
-```sh
-Duplo clique no arquivo AditumChallenge.sln caso o Visual Studio esteja como padrão, ou presiona com botão direito do mouse e aperte 'abri com' e selecione o Visual Studio
+### Rodando Projeto
+
 ```
+cd AditumChallenge
+dotnet run
+```
+
+### Rodando Testes
+
+```
+cd UnitTests
+dotnet test
+```
+
 
 ## Contríbuindo
 
