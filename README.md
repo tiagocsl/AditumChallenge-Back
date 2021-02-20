@@ -1,7 +1,7 @@
 <p align="center">
   <h3 align="center">AditumChallenge Restaurants</h3>
   <p align="center">
-    Desafio proposto pela empresa Aditum Pagamentos '-' 
+    Desafio proposto pela empresa Aditum Pagamentos 
   </p>
 </p>
 
